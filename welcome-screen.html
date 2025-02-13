@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="welcome-screen.html">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Our Love Story</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #ffe6e6, #fff5e6);
+      color: #a30000;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    #welcome-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    #welcome-screen h1 {
+      font-size: 3em;
+      margin: 0.2em;
+    }
+
+    #welcome-screen h3 {
+      font-size: 1.5em;
+      margin: 0.2em;
+    }
+
+    .heart-button {
+      margin-top: 2em;
+      width: 100px;
+      height: 100px;
+      border: none;
+      background: transparent;
+      background-image: url('https://www.shutterstock.com/shutterstock/photos/2516011563/display_1500/stock-vector-heart-love-romance-or-valentine-s-day-red-heart-heart-vector-icons-artistic-red-heart-love-2516011563.jpg');
+      background-size: contain;
+      cursor: pointer;
+      animation: glow 2s infinite;
+    }
+
+    @keyframes glow {
+      0% {
+        filter: drop-shadow(0 0 5px #ff6666);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 20px #ff0000);
+      }
+
+      100% {
+        filter: drop-shadow(0 0 5px #ff6666);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    #polaroid-wall {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      padding: 40px;
+      background: #fdf6f0;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .polaroid {
+      width: 300px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      box-shadow: 10px 10px 5px #aaa;
+      background-color: white;
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      transform: rotate(2deg);
+      transition: transform 0.3s ease;
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.05);
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .polaroid p {
+      margin-top: 15px;
+      font-size: 1.3em;
+      color: #a30000;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(255, 192, 203, 0.9);
+      /* Soft pink overlay */
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+      margin: auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 600px;
+      position: relative;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+      border: 3px solid #ff7b7b;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" font-size="30" fill="%23ffd4d4" opacity="0.3" font-family="cursive">♥</text></svg>');
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .modal-content img,
+    .modal-content video {
+      max-width: 45%;
+      border: 3px solid white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transform: rotate(-2deg);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-content img:hover,
+    .modal-content video:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .modal-content p {
+      margin: 0 0 0 25px;
+      flex: 1;
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #6b2b2b;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .modal-content p::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: linear-gradient(to bottom, #ff7b7b, #ff5252);
+      border-radius: 2px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      color: #ff7b7b;
+      font-size: 32px;
+      font-weight: 300;
+      transition: all 0.3s ease;
+      background: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .close:hover {
+      color: #ff5252;
+      transform: scale(1.1) rotate(90deg);
+      cursor: pointer;
+    }
+
+    /* Add heart decoration */
+    .modal-content::after {
+      content: '♥';
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ff7b7b;
+      font-size: 40px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 
+#playlist {
+  max-width: 800px;
+  margin: 1em auto;
+  padding: 1em;
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+}
+#playlist ul {
+  list-style: none;
+  padding: 0;
+}
+#playlist li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#playlist li:hover {
+  background: #f0f0f0;
+} */
+  </style>
+</head>
+
+<body>
+  <div id="welcome-screen">
+    <h1>Hi Diệp Fuckyou ❤️</h1>
+    <h3>Click the heart to relive our favorite moments...</h3>
+    <button class="heart-button" onclick="showGratefulScreen()"> </button>
+  </div>
+  <!-- Include this section in the same HTML file (below the welcome-screen div) -->
+  <div id="grateful-screen"
+    style="display:none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: url('https://example.com/vintage-scroll-bg.jpg') no-repeat center center/cover;">
+    <h1 style="font-family: 'Brush Script MT', cursive; font-size: 2.8em; color: #a30000;">Every moments with you is a
+      moments of a lifetime 💌</h1>
+    <p style="max-width: 600px; font-size: 1.2em; line-height: 1.5; margin: 1em;">
+
+shit
+    </p>
+    <button onclick="showPolaroidWall()"
+      style="padding: 10px 20px; font-size: 1em; border: none; background: #ffcccc; color: #a30000; border-radius: 5px; cursor: pointer;">
+      Fukin hate you everyday →
+    </button>
+  </div>
+
+
+
+  <!-- Include this section in the same HTML file (below the grateful-screen div) -->
+  <div id="polaroid-wall"
+    style="display:none; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; padding: 20px; background: #fdf6f0;">
+    <!-- Sample Polaroid Frame -->
+    <div class="polaroid" onclick="openMemoryModal('memory1')">
+      <img src="CucCunbg/diep.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh áo dài </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory2')">
+      <img src="CucCunbg/diep2.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh chụp với mẫn nhi </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory3')">
+      <img src="CucCunbg/diep3.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh chụp với  </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory4')">
+      <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Bia  </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory5')">
+      <img src="CucCunbg/anhdoi2.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh xin chụp cùng  </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory4')">
+      <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Quà giáng sinh   </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory4')">
+      <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Mấy cái note anh viết  </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory4')">
+      <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Ghét nhau   </p>
+    </div>
+  
+    <!-- Add more polaroid frames similarly -->
+  </div>
+
+  <!-- Modal for showing a larger view and story -->
+  <div id="memory-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeMemoryModal()">&times;</span>
+        <div id="modal-media-container">  <img id="modal-image" src="" alt="Memory" style="display:none; max-width: 100%; max-height: 80vh;">
+            <video id="modal-video" controls style="display:none; max-width: 100%; max-height: 80vh;">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p id="modal-story"></p>
+    </div>
+</div>
+
+
+
+  <script>
+    // Sample memory data (this can come from a database or JSON file)
+    const memories = {
+      memory1: {
+        image: 'CucCunbg/diepp.jpg',
+        story: "anh simp thì cũng đúng nhưng mỗi lần nhìn em với một outfit nào đó luôn làm anh bất ngờ há hốc mồm stuned ,đặc biệt ấn tượng với outfit áo dài "
+      },
+
+      memory2: {
+        video: 'CucCunbg/embe.mp4',
+        story: "anh nhớ em siêu thích trẻ con ,còn nhớ 1 hôm nào đó ở cửa hàng mình có 1 gia đình có em bé rất yêu ,anh nhớ cái cách em gần gũi,cách em trêu đùa với em bé,bế bé vào cửa hàng,một cái ấn tượng trong anh tới bây giờ  "
+      },
+
+      memory3: {
+        image: 'CucCunbg/anhdoi1.jpg',
+        // video: 'anhngu.mp4',
+        story: "anh vốn là một thằng siêu dốt học gì cũng không vào đã thế còn lười ,đợt vào training mãi mới được anh ấn tượng em trong việc làm việc cái gì ra cái đấy ,anh nhớ khoảng thời gian đầu mình làm vui ghê  "
+
+      },
+      memory4: {
+        video: 'CucCunbg/timeplase2.mp4',
+        story: "Bia lần đầu được 1 bạn rủ tôi đi uống món đồ uống tôi yêu thích nhất đời này ,tôi vẫn còn nhớ lắm hôm đấy em gặp chuyện gì nhưng nhìn thấy em mạnh mẽ hoan hỉ lắm bạn vẫn confphats triển chán  "
+
+      },
+      memory5: {
+        image: 'CucCunbg/anhdoi5.jpg',
+        story: " Tôi nhớ lần đầu xin chụp ảnh cùng lần đấy đi ăn liên hoan với quán lần đấy anh say lắm say sỉn ,còn đây là ảnh gần nhất chụp với nhau  "
+
+      }
+      // Add more memory entries as needed
+    };
+
+    function openMemoryModal(memoryId) {
+      const modal = document.getElementById('memory-modal');
+      const modalImage = document.getElementById('modal-image');
+      const modalVideo = document.getElementById('modal-video');
+      const modalStory = document.getElementById('modal-story');
+
+      const memory = memories[memoryId];
+
+      if (memory.image) {
+        modalImage.src = memory.image;
+        modalImage.style.display = 'block';
+        modalVideo.style.display = 'none';
+      } else if (memory.video) {
+        modalVideo.querySelector('source').src = memory.video;
+        modalVideo.load();
+        modalVideo.style.display = 'block';
+        modalImage.style.display = 'none';
+      }
+
+      modalStory.textContent = memory.story;
+      modal.style.display = 'flex';
+    }
+
+    function closeMemoryModal() {
+      const modal = document.getElementById('memory-modal');
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+      const modal = document.getElementById('memory-modal');
+      if (event.target === modal) {
+        closeMemoryModal();
+      }
+    };
+  </script>
+
+
+  <script>
+    function showPolaroidWall() {
+      document.getElementById('grateful-screen').style.display = 'none';
+      document.getElementById('polaroid-wall').style.display = 'grid';
+    }
+  </script>
+
+  <script>
+    function showGratefulScreen() {
+      // Hide welcome screen and display the next screen
+      document.getElementById('welcome-screen').style.display = 'none';
+      document.getElementById('grateful-screen').style.display = 'flex';
+    }
+  </script>
+</body>
+
+</html>
