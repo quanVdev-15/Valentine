@@ -89,11 +89,13 @@
       text-align: center;
       font-family: 'Dancing Script', cursive;
       transform: rotate(2deg);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
     }
 
     .polaroid:hover {
-      transform: rotate(0deg) scale(1.05);
+      z-index: 2;
+      transform: scale(1.05) rotate(0deg);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
     .polaroid img {
@@ -281,7 +283,7 @@
       moments of a lifetime 💌</h1>
     <p style="max-width: 600px; font-size: 1.2em; line-height: 1.5; margin: 1em;">
 
-shit
+      shit
     </p>
     <button onclick="showPolaroidWall()"
       style="padding: 10px 20px; font-size: 1em; border: none; background: #ffcccc; color: #a30000; border-radius: 5px; cursor: pointer;">
@@ -305,45 +307,50 @@ shit
     </div>
     <div class="polaroid" onclick="openMemoryModal('memory3')">
       <img src="CucCunbg/diep3.jpg" alt="Memory Thumbnail" style="width:100%;">
-      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh chụp với  </p>
+      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh chụp với </p>
     </div>
     <div class="polaroid" onclick="openMemoryModal('memory4')">
       <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
-      <p style="text-align:center; font-family: 'Caveat', cursive;">Bia  </p>
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Bia </p>
     </div>
     <div class="polaroid" onclick="openMemoryModal('memory5')">
       <img src="CucCunbg/anhdoi2.jpg" alt="Memory Thumbnail" style="width:100%;">
-      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh xin chụp cùng  </p>
+      <p style="text-align:center; font-family: 'Caveat', cursive;">ảnh xin chụp cùng </p>
+    </div>
+    <div class="polaroid" onclick="openMemoryModal('memory6')">
+      <img src="CucCunbg/anhdoi6.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Quà giáng sinh </p>
     </div>
     <div class="polaroid" onclick="openMemoryModal('memory4')">
       <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
-      <p style="text-align:center; font-family: 'Caveat', cursive;">Quà giáng sinh   </p>
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Mấy cái note anh viết note cho em </p>
     </div>
-    <div class="polaroid" onclick="openMemoryModal('memory4')">
-      <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
-      <p style="text-align:center; font-family: 'Caveat', cursive;">Mấy cái note anh viết  </p>
+    <div class="polaroid" onclick="openMemoryModal('memory7')">
+      <img src="CucCunbg/anhdoi8.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Ghét nhau </p>
     </div>
-    <div class="polaroid" onclick="openMemoryModal('memory4')">
-      <img src="CucCunbg/anhbia.jpg" alt="Memory Thumbnail" style="width:100%;">
-      <p style="text-align:center; font-family: 'Caveat', cursive;">Ghét nhau   </p>
+    <div class="polaroid" onclick="openMemoryModal('memory8')">
+      <img src="CucCunbg/toi1.jpg" alt="Memory Thumbnail" style="width:100%;">
+      <p style="text-align:center; font-family: 'Caveat', cursive;">Đi lượn</p>
     </div>
-  
+
     <!-- Add more polaroid frames similarly -->
   </div>
 
   <!-- Modal for showing a larger view and story -->
   <div id="memory-modal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeMemoryModal()">&times;</span>
-        <div id="modal-media-container">  <img id="modal-image" src="" alt="Memory" style="display:none; max-width: 100%; max-height: 80vh;">
-            <video id="modal-video" controls style="display:none; max-width: 100%; max-height: 80vh;">
-                <source src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-        <p id="modal-story"></p>
+      <span class="close" onclick="closeMemoryModal()">&times;</span>
+      <div id="modal-media-container"> <img id="modal-image" src="" alt="Memory"
+          style="display:none; max-width: 100%; max-height: 80vh;">
+        <video id="modal-video" controls style="display:none; max-width: 100%; max-height: 80vh;">
+          <source src="" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <p id="modal-story"></p>
     </div>
-</div>
+  </div>
 
 
 
@@ -375,6 +382,21 @@ shit
         image: 'CucCunbg/anhdoi5.jpg',
         story: " Tôi nhớ lần đầu xin chụp ảnh cùng lần đấy đi ăn liên hoan với quán lần đấy anh say lắm say sỉn ,còn đây là ảnh gần nhất chụp với nhau  "
 
+      },
+      memory6: {
+        image: 'CucCunbg/anhdoi7.jpg',
+        story: "Anh nhớ món quà đầu tiên em tặng hoặc cho chứ kphai tặng lắm "
+
+      },
+      memory7: {
+      video:"CucCunbg/anhngu.mp4",
+      story: "Anh thật sự ghét em nếu bảo ghét ai nhiều nhất chắc ghét em chưa ghét ai bằng em nhưng nói ghét thôi chứ tôi vẫn cho bạn là đặc biệt với tôi  "
+      
+      },
+      memory8: {
+      video:"CucCunbg/vid.mp4",
+      story: " Thích gì nhất chắc thích đi lượn với em ,nếu bảo chọn một người đi lượn hoặc travel bằng xe máy,ô tô ,tàu hỏa hoặc đi bộ trong 24h thì anh chọn em vì khi đi với em cminh nói gì được trên trời dưới biển  "
+      
       }
       // Add more memory entries as needed
     };
